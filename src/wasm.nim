@@ -1,7 +1,12 @@
-# This is just an example to get you started. A typical library package
-# exports the main API in this file. Note that you cannot rename this file
-# but you can remove it if you wish.
+const magicModuleHeader = [0x00'u8, 0x61, 0x73, 0x6d];
+const moduleVersion = [0x01'u8, 0x00, 0x00, 0x00];
 
-proc add*(x, y: int): int =
-  ## Adds two files together.
-  return x + y
+
+proc bytes2string(self: openArray[byte]): string =
+    for i, e in self.pairs:
+        result.add chr(self[i])
+proc emmiter(): string =
+    return magicModuleHeader.bytes2string & moduleVersion.bytes2string
+
+when isMainModule:
+    echo emmiter()
